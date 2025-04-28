@@ -3,6 +3,8 @@ kind: Component
 metadata:
   name: authservice
   description: authentication service
+  annotations:
+    github.com/project-slug: adi-nagesh/backstage-auth-service
   tags:
     - javascript
   links:
@@ -14,4 +16,39 @@ spec:
   type: service
   lifecycle: production
   owner: development
+  providesApis:
+    - auth-api
+
+---
+
+apiVersion: backstage.io/v1beta1
+kind: API
+metadata: 
+   name: auth-api
+   description: Verfidy user authentication status 
+
+spec:
+  type: openapi
+  lifecycle: production
+  apiProvidedBy: authservice
+  owner: development
+  definition: |
+    openapi: "3.0.0"
+    info:
+      version: 1.0.0
+      title: Artist API
+      license:
+        name: MIT
+    servers:
+      - url: http://artist.spotify.net/v1
+    paths:
+      /artists:
+        get:
+          summary: List all artists
+    ...
+
+
+    
+
+
 
